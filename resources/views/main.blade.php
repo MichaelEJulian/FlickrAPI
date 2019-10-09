@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Flickr</title>
+@extends('layouts.app')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+@section('content')
 
-        <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    </head>
-    <body>
         <div class="container text-center">
             <h1>{{ $selected_category }} Photo Gallery</h1>
         </div>    
@@ -31,7 +20,11 @@
                     </div>
                     <div class="col-8">
                                 
-                        {{ $msg }}
+                        @if ($msg)
+                        <ul class="alert alert-danger">
+                            <li>{{ $msg }}</li>
+                        </ul>
+                        @endif
                         @if(count($results) != 0)
                         <div class="container">
                             <div class="row text-center text-lg-left">
@@ -56,9 +49,4 @@
                 </div>
             </div>
         </div>
-        <script src="/js/app.js"></script>
-        <script>
-           // console.log(app);
-        </script>    
-    </body>
-</html>
+@endsection

@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Laravel</title>
+@extends('layouts.app')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+@section('content')
 
-        <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-        
-    </head>
-    <body>
         <div class="container text-center">
             <h1>{{ $selected_category }} Photo Gallery</h1>
         </div>    
@@ -32,8 +19,12 @@
                         </ul>
                     </div>
                     <div class="col-9">
-                        {{ $msg }}
-                        @if($result)
+                        @if ($msg)
+                        <ul class="alert alert-danger">
+                            <li>{{ $msg }}</li>
+                        </ul>
+                        @endif
+                        @if($result->stat == 'ok')
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm">
@@ -44,7 +35,7 @@
                                 <div class="col-sm">
                                     <h3>{{ $result->photo->title->_content }} </h3>
                                     <p>
-                                        {{ $result->photo->description->_content }} 
+                                        {!! $result->photo->description->_content !!} 
                                     </p>
                                 </div>  
                                 <div>
@@ -53,7 +44,7 @@
                             <div>    
                         </div>
                         @else
-                            No Result Found for $result->photo->id   
+                            No Result Found   
                         @endif
                     </div>
                     @else
@@ -63,9 +54,4 @@
                 </div>
             </div>
         </div>
-        <script src="/js/app.js"></script>
-        <script>
-           // console.log(app);
-        </script>    
-    </body>
-</html>
+@endsection

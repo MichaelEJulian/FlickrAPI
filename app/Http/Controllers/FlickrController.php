@@ -16,21 +16,11 @@ class FlickrController extends Controller
     {
         $categories = $this->getCategories();
         $selected_category = $categories[0]->name;
-        $msg = "";
+        
+        $api = $this->callFlickerAPI($selected_category);
 
-        try{
-            $url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=95defdc48ccdfa26ddb3ac02d8be8ba0&tags=' . $selected_category . '&per_page=10&page=1&format=json&nojsoncallback=1&extras=description ';
-            
-            $client = new Client();
-            $response = $client->get($url);
-            $jsondata = json_decode($response->getBody());
-            $results = $jsondata->photos->photo;
-            
-        }
-        catch (Exception $e) {
-            $results = [];
-            $msg = "Error connecting to API";
-        }
+        $msg = $api[0];
+        $results = $api[1];
         
         return view('main', compact('categories', 'selected_category', 'results', 'msg'));
 
@@ -40,7 +30,7 @@ class FlickrController extends Controller
     /**
      * get all of the categories.
      *
-     * @return Illuminate\View\View
+     * @return App\Category
      */
     public function getCategories()
     {
@@ -49,7 +39,7 @@ class FlickrController extends Controller
     }
 
     /**
-     * Get Flickr Image Info
+     * call Flickr Image Info
      *
      * @return View
      */
@@ -64,6 +54,8 @@ class FlickrController extends Controller
             $client = new Client();
             $response = $client->get($url);
             $result = json_decode($response->getBody());
+
+            
            
         }
         catch (Exception $e) {
@@ -74,6 +66,7 @@ class FlickrController extends Controller
         return view('showinfo', compact('categories', 'selected_category', 'result', 'msg'));
     }
 
+
     /**
      * Search Flickr.
      *
@@ -82,7 +75,31 @@ class FlickrController extends Controller
     public function searchFlickerAPI($selected_category)
     {
         $categories = $this->getCategories();
-        
+        $check_category = $categories->firstWhere('name', $selected_category);
+
+        if ($check_category){
+            $api = $this->callFlickerAPI($selected_category);
+
+            $msg = $api[0];
+            $results = $api[1];
+        }
+        else{
+            $msg = 'Failed XXXX';
+            $results = [];
+
+        }
+
+        return view('main', compact('categories', 'selected_category', 'results', 'msg'));
+    }
+
+    
+    /**
+     * call Flickr search API.
+     *
+     * @return View
+     */
+    public function callFlickerAPI($selected_category)
+    {
         $msg = "";
         try{
             $url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=95defdc48ccdfa26ddb3ac02d8be8ba0&tags=' . $selected_category . '&per_page=10&page=1&format=json&nojsoncallback=1&extras=description ';
@@ -97,8 +114,10 @@ class FlickrController extends Controller
             $results = [];
             $msg = "Error connecting to API";
         }
+
+        return array($msg, $results);
+
         
-        return view('main', compact('categories', 'selected_category', 'results', 'msg'));
     }
 
 }

@@ -81,9 +81,7 @@
             </div>
         </div>
 
-        <div class="panel-footer">
-            {!! $categories->render() !!}
-        </div>
+       
         
         @endif
     
