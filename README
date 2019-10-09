@@ -1,0 +1,18 @@
+
+composer install
+
+//-----------------------------
+// Create DB 'flicker' 
+// Create the appropriate user and password
+// Update .env to insert the mysql credentials
+//-----------------------------
+php artisan migrate
+
+
+//-----------------------------
+// Alternatively create run DB.SQL to create the DB manually and update .env
+//-----------------------------
+
+npm install
+
+php artisan serve
