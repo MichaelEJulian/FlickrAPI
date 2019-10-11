@@ -21,7 +21,7 @@
 
     <style>
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 765px) {
         #list-group-md{
             display: none !important;
         }
@@ -31,7 +31,7 @@
         }
     }
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 765px) {
         #list-group-md{
             display: block !important;
         }
