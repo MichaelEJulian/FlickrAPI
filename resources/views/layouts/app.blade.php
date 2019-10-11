@@ -18,6 +18,29 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+
+    @media screen and (max-width: 600px) {
+        #list-group-md{
+            display: none !important;
+        }
+
+        #dropdown-sm{
+            display: block !important;
+        }
+    }
+
+    @media screen and (min-width: 600px) {
+        #list-group-md{
+            display: block !important;
+        }
+
+        #dropdown-sm{
+            display: none !important;
+        }
+    }
+    </style>
 </head>
 <body>
     <div id="app">
